@@ -26,7 +26,7 @@ export default function Page({ params }) {
   
 
   const voo = dados || {
-    internacional: false,
+    
     identificador: "",
     dataCheckin: "",
     dataEmbarque: "",
@@ -58,16 +58,9 @@ export default function Page({ params }) {
             setFieldValue 
         }) => (
           <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="internacional">
-              <Form.Label>Internacional</Form.Label>
-              <Form.Check
-                type="checkbox"
-                checked={values.internacional}
-                onChange={() => setFieldValue('internacional', !values.internacional)}
-              />
-            </Form.Group>
+            
             <Form.Group className="mb-3" controlId="identificador">
-              <Form.Label>Identificador</Form.Label>
+              <Form.Label>ID Voo</Form.Label>
               <Form.Control
                 type="text"
                 name="identificador"

@@ -18,15 +18,7 @@ export default function Page() {
   }, []);
 
   function excluir(id) {
-    Swal.fire({
-      title: "Tem certeza?",
-      text: "Você não poderá reverter isso!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sim, apague!"
-    }).then((result) => {
+   then((result) => {
       if (result.isConfirmed) {
         const dadosAtualizados = aeroportos.filter((item) => item.id !== id);
         

@@ -20,15 +20,7 @@ export default function Page() {
   }, [])
 
   function excluir(id) {
-    Swal.fire({
-      title: "Tem certeza?",
-      text: "Você não poderá reverter isso!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Sim, apague!"
-    }).then((result) => {
+    then((result) => {
       if (result.isConfirmed) {
         const dadosAtualizados = voos.filter((item) => item.id !== id);
 
@@ -55,7 +47,6 @@ export default function Page() {
         <thead>
           <tr>
             <th>#</th>
-            <th>Iternacional</th>
             <th>Identificador</th>
             <th>Data_Checkin</th>
             <th>Data_Embarque</th>
