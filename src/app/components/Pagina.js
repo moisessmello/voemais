@@ -5,43 +5,32 @@ export default function Pagina(props) {
         <>
             <Navbar bg="dark" data-bs-theme="dark">
                 <Container>
-                    <Navbar.Brand href="/">Fundamentos</Navbar.Brand>
+                    <Navbar.Brand href="/">Voe Mais</Navbar.Brand>
                     <Nav className="me-auto">
-                        <NavDropdown title="Filmes" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/filmes/categoria/popular">
-                               Populares
+                        <NavDropdown title="Ver Mais" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/aeroportos">
+                                Aeroportos
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/filmes/categoria/now_playing">
-                               Em cartaz
+                            <NavDropdown.Item href="/empresas">
+                                Empresas
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/filmes/categoria/upcoming">
-                                Em Breve
+                            <NavDropdown.Item href="/voos">
+                                Voos
+                            </NavDropdown.Item>
+                       
+                        <NavDropdown.Divider />
+                            <NavDropdown.Item href="/passagens">
+                                Passagens
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
-                            <NavDropdown.Item href="/filmes/categoria/top_rated">
-                                Bem avaliados
+                            <NavDropdown.Item href="/passageiros">
+                                Passageiros
                             </NavDropdown.Item>
-                        </NavDropdown>
-                        <NavDropdown title="Séries" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="/series/categoria/popular">
-                               Populares
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/series/categoria/on_the_air">
-                               No ar
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/series/categoria/airing_today">
-                                Estreando
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="/series/categoria/top_rated">
-                                Bem avaliados
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                        <Nav.Link href="/atores">Atores</Nav.Link>
+                            </NavDropdown>
+
+
                     </Nav>
                 </Container>
             </Navbar>
