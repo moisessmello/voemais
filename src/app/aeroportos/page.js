@@ -4,11 +4,9 @@ import Link from "next/link";
 import Pagina from "../components/Pagina";
 import { FaPlusCircle } from "react-icons/fa";
 import { Table } from "react-bootstrap";
-import { FaArrowLeft } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
-
 
 export default function Page() {
   const [aeroportos, setAeroportos] = useState([]);

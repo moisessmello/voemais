@@ -8,7 +8,6 @@ import { MdDelete } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-
 export default function Page() {
   const [passageiros, setPassageiros] = useState([]);
 
