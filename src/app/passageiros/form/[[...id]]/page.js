@@ -1,104 +1,180 @@
-'use client'
+"use client";
 
 import Pagina from "@/app/components/Pagina";
-import PassagemValidator from "@/app/validators/PassagemValidator";
+import PassageirosValidator from "@/app/validators/PassageiroValidator";
+import PassageiroValidator from "@/app/validators/PassageiroValidator";
 import { Formik } from "formik";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
-import { FaAngleLeft } from "react-icons/fa";
+import { MdOutlineArrowBack } from "react-icons/md";
+import { mask } from "remask";
 import { v4 } from "uuid";
 
 export default function Page({ params }) {
-
     const route = useRouter()
 
-    const passagens = JSON.parse(localStorage.getItem('passagens')) || []
-    const dados = passagens.find(item => item.id == params.id)
-    const passagem = dados || { voo: '', passageiro: '', assento: '', preco: '' }
+    const passageiros = JSON.parse(localStorage.getItem('passageiros')) || []
+    const dados = passageiros.find(item => item.id == params.id)
+    const passageiro = dados || { nome: '', email: '', telefone: '', data_nascimento: '', tipo_documento: '', documento: '' }
 
     function salvar(dados) {
 
-        if(passagem.id){
-            Object.assign(passagem, dados)
+        if (passageiro.id) {
+            Object.assign(passageiro, dados)
         } else {
             dados.id = v4()
-            passagens.push(dados)
+            passageiros.push(dados)
         }
-        
-        localStorage.setItem('passagens', JSON.stringify(passagens))
-        return route.push('/passagem');
+
+        localStorage.setItem('passageiros', JSON.stringify(passageiros))
+        return route.push('/passageiros')
     }
 
     return (
-        <Pagina titulo="Passagem">
+        <Pagina titulo="Passageiro">
+
             <Formik
-                initialValues={passagem}
-                validationSchema={PassagemValidator}
+                initialValues={passageiro}
+                validationSchema={PassageirosValidator}
                 onSubmit={values => salvar(values)}
             >
                 {({
                     values,
+                    errors,
                     handleChange,
                     handleSubmit,
-                    errors,
-                    touched,
-                }) => (
-                    <Form className="mt-3">
-                        <Form.Group className="mb-3" controlId="voo">
-                            <Form.Label>Voo</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Digite o voo da passagem"
-                                name="voo"
-                                value={values.voo}
-                                onChange={handleChange('voo')}
-                                isInvalid={!!errors.voo && touched.voo}
-                            />
-                            <ErrorMessage name="voo" component="div" className="text-danger" />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="passageiro">
-                            <Form.Label>Passageiro</Form.Label>
-                            <Form.Control type="text"
-                                placeholder="Digite o passageiro da passagem"
-                                name="passageiro"
-                                value={values.passageiro}
-                                onChange={handleChange('passageiro')}
-                                isInvalid={!!errors.passageiro && touched.passageiro}
-                            />
-                            <ErrorMessage name="passageiro" component="div" className="text-danger" />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="assento">
-                            <Form.Label>Assento</Form.Label>
-                            <Form.Control type="number"
-                                placeholder="Digite o assento da passagem"
-                                name="assento"
-                                value={values.assento}
-                                onChange={handleChange('assento')}
-                                isInvalid={!!errors.assento && touched.assento}
-                            />
-                            <ErrorMessage name="assento" component="div" className="text-danger" />
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="preco">
-                            <Form.Label>Preço</Form.Label>
-                            <Form.Control type="number"
-                                placeholder="Digite o preço da passagem"
-                                name="preco"
-                                value={values.preco}
-                                onChange={handleChange('preco')}
-                                isInvalid={!!errors.preco && touched.preco}
-                            />
-                            <ErrorMessage name="preco" component="div" className="text-danger" />
-                        </Form.Group>
-                        <div className="text-center">
-                            <Link href={"/passagem"} className="btn btn-primary"><FaAngleLeft />Voltar</Link>
-                            <Button variant="success" className="ms-1" onClick={handleSubmit}>
-                                <FaCheck />Salvar
-                            </Button>
-                        </div>
-                    </Form>
-                )}
+                    setFieldValue,
+                }) => {
+
+                    useEffect(() => {
+                        switch (values.tipo_documento) {
+                            case 'CPF':
+                                values.documento = mask(values.documento, '999.999.999-99');
+                                break;
+                            case 'CNPJ':
+                                values.documento = mask(values.documento, '99.999.999/9999-99');
+                                break;
+                            case 'RG':
+                                values.documento = mask(values.documento, '9.999.999');
+                                break;
+                            case 'Passaporte':
+                                values.documento = mask(values.documento, 'AAA9999');
+                                break;
+                        }
+                    }, [values.documento])
+
+                    useEffect(() => {
+                        values.documento = ''
+                    }, [values.tipo_documento])
+
+
+                    return (
+
+                        <Form>
+                            <Form.Group className="mb-3" controlId="nome">
+                                <Form.Label>Nome</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="nome"
+                                    value={values.nome}
+                                    isInvalid={errors.nome}
+                                    onChange={handleChange('nome')}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.nome}
+                                </Form.Control.Feedback>
+
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="tipo_documento">
+                                <Form.Label>Tipo de Documento</Form.Label>
+                                <Form.Select
+                                    name="origem"
+                                    value={values.tipo_documento}
+                                    onChange={handleChange('tipo_documento')}
+                                >
+
+
+                                    <option value=''>Selecione</option>
+                                    <option value='CPF'>CPF</option>
+                                    <option value='CNPJ'>CNPJ</option>
+                                    <option value='Passaporte'>Passaporte</option>
+                                    <option value='RG'>RG</option>
+                                    <option value='Outro'>Outro</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="documento">
+                                <Form.Label>Documento</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="documento"
+                                    value={values.documento}
+                                    isInvalid={errors.documento}
+                                    onChange={handleChange('documento')}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.documento}
+                                </Form.Control.Feedback>
+
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="email">
+                                <Form.Label>E-mail</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="email"
+                                    value={values.email}
+                                    isInvalid={errors.email}
+                                    onChange={handleChange('email')}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.email}
+                                </Form.Control.Feedback>
+
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="telefone">
+                                <Form.Label>Telefone</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="telefone"
+                                    value={values.telefone}
+                                    isInvalid={errors.telefone}
+                                    onChange={(value) => {
+                                        setFieldValue('telefone', mask(value.target.value, '(99) 99999-9999'))
+                                    }}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="data_nascimento">
+                                <Form.Label>Dt. Nascimento</Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    name="data_nascimento"
+                                    value={values.data_nascimento}
+                                    isInvalid={errors.data_nascimento}
+                                    onChange={(value) => {
+                                        setFieldValue('data_nascimento', mask(value.target.value, '99/99/9999'))
+                                    }}
+                                />
+                                <Form.Control.Feedback type="invalid">
+                                    {errors.data_nascimento}
+                                </Form.Control.Feedback>
+
+                            </Form.Group>
+                            <div className="text-center">
+                                <Button onClick={handleSubmit} variant="success">
+                                    <FaCheck /> Salvar
+                                </Button>
+                                <Link
+                                    href="/passageiros"
+                                    className="btn btn-danger ms-2"
+                                >
+                                    <MdOutlineArrowBack /> Voltar
+                                </Link>
+                            </div>
+                        </Form>
+                    )
+                }}
             </Formik>
         </Pagina>
     )

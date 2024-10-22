@@ -63,12 +63,12 @@ export default function Page() {
                   onClick={() => excluir(item.id)}
                 />
               </td>
-              <td>{item.nomeCompleto}</td>
-              <td>{item.tipoDocumento}</td>
+              <td>{item.nome}</td>
+              <td>{item.tipo_documento}</td>
               <td>{item.documento}</td>
               <td>{item.email}</td>
               <td>{item.telefone}</td>
-              <td>{item.dataNascimento}</td>
+              <td>{item.data_nascimento}</td>
             </tr>
           ))}
         </tbody>
