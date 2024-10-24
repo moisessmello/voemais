@@ -11,10 +11,17 @@ const AeroportoValidator = Yup.object().shape({
         .max(5, 'A sigla deve ter no máximo 5 caracteres')
         .required('Campo obrigatório'),    
     uf: Yup.string()
-        .length(2, 'UF deve conter 2 caracteres')
-        .required('Campo obrigatório'),    
-    cidade: Yup.string().required('Campo obrigatório'),    
-    pais: Yup.string().required('Campo obrigatório'),
+        .min(2, "O mínimo de caracteres é 3!")
+        .max(4, "O máximo de caracteres é 4!")
+        .required("Campo Obrigatório"),
+    cidade: Yup.string()
+        .min(3, "O mínimo de caracteres é 3")
+        .max(30, "O máximo de caracteres é 30!")
+        .required("Campo Obrigatório"),    
+    pais: Yup.string()
+        .min(3, "O mínimo de caracteres é 3")
+        .max(30, "O máximo de caracteres é 30!")
+        .required("Campo Obrigatório"),
 });
 
 export default AeroportoValidator;

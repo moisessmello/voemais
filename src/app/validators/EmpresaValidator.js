@@ -3,15 +3,14 @@ import * as Yup from 'yup';
 const EmpresaValidator = Yup.object().shape({
     
     nome: Yup.string()
-        .min(3, 'Mínimo de caracteres é 3')
-        .max(10, 'Máximo de caracteres é 10')
-        .required('Campo obrigatório'),   
+        .min(3, 'O mínimo de caracteres é 3')
+        .max(30, 'O máximo de caracteres é 30!')
+        .required('Campo Obrigatório'),
     logo: Yup.string()
-        .min(2, 'Mínimo de caracteres é 2')
-        .required('Campo obrigatório'),    
+        .min(4, 'Mínimo de caracteres é 4'),
+          
     site: Yup.string()
-        .min(5, 'Mínimo de caracteres é 5')
-        .required('Campo obrigatório'),
+        .url('Digite uma url valida!')
 });
 
 export default EmpresaValidator

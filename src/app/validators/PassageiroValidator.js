@@ -3,17 +3,25 @@ import * as Yup from 'yup';
 const PassageirosValidator = Yup.object().shape({
 
     nome: Yup.string()
-        ,
+        .min(3, 'O mínimo de caracteres é 3')
+        .max(30, 'O máximo de caracteres é 30!')
+        .required('Campo Obrigatório!'),
     tipo_documento: Yup.string()
-        .required('Campo obrigatório'),
+        .min(3, 'O mínimo de caracteres é 3')
+        .max(30, 'O máximo de caracteres é 30!')
+        .required('Campo Obrigatório!'),
     documento: Yup.string()
-        .required('Campo obrigatório'),
+        .min(3, 'O mínimo de caracteres é 3')
+        .max(30, 'O máximo de caracteres é 30!')
+        .required('Campo Obrigatório!'),
     email: Yup.string()
-        .email('Email inválido')
-        .required('Campo obrigatório'),
+        .email('Digite um email válido!')
+        .required('Campo Obrigatório!'),
     telefone: Yup.string()
-        .min(10, 'O telefone deve ter no mínimo 10 dígitos')
-        .required('Campo obrigatório'),        
+        .positive('O número deve ser positivo!')
+        .integer('O número deve ser inteiro!')
+        .test('len', 'O telefone deve ter entre 8 e 11 dígitos', val => val && val.toString().length >= 8 && val.toString().length <= 11)
+        .required('Campo Obrigatório!'),
     data_nascimento: Yup.string()
         
 });

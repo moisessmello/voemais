@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { FaCheck } from "react-icons/fa";
 import { MdOutlineArrowBack } from "react-icons/md";
+import { mask } from "remask";
 import { v4 } from "uuid";
 
 export default function Page({ params }) {
@@ -71,19 +72,21 @@ export default function Page({ params }) {
             <Form.Group className="mb-3" controlId="dataCheckin">
               <Form.Label>Data Check-in</Form.Label>
               <Form.Control
-                type="date"
+                type="text"
                 name="dataCheckin"
                 value={values.dataCheckin}
-                onChange={handleChange}
+                onChange={(value) => {setFieldValue('dataCheckin', mask(value.target.value, '99/99/9999'))}}
+               
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="dataEmbarque">
               <Form.Label>Data Embarque</Form.Label>
               <Form.Control
-                type="date"
+                type="text"
                 name="dataEmbarque"
                 value={values.dataEmbarque}
-                onChange={handleChange}
+                onChange={(value) => {setFieldValue('dataEmbarque', mask(value.target.value, '99/99/9999'))}}
+                  
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="origem">
@@ -134,7 +137,14 @@ export default function Page({ params }) {
                 type="text"
                 name="preco"
                 value={values.preco}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  const formattedValue = (Number(value) / 100).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  });
+                  setFieldValue("preco", formattedValue);
+                }}
               />
             </Form.Group>
             <div className="text-center">

@@ -104,6 +104,9 @@ export default function Page({ params }) {
                                     <option value='RG'>RG</option>
                                     <option value='Outro'>Outro</option>
                                 </Form.Select>
+                                <Form.Control.Feedback type="invalid">
+                        {errors.tipo_Documento}
+                      </Form.Control.Feedback>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="documento">
                                 <Form.Label>Documento</Form.Label>

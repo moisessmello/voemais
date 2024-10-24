@@ -42,6 +42,7 @@ export default function Page({ params }) {
                     values,
                     handleChange,
                     handleSubmit,
+                    setFieldValue,
                     errors,
                     touched,
                 }) => (
@@ -56,7 +57,9 @@ export default function Page({ params }) {
                                 onChange={handleChange('voo')}
                                 isInvalid={!!errors.voo && touched.voo}
                             />
-                            <ErrorMessage name="voo" component="div" className="text-danger" />
+                            <Form.Control.Feedback type="invalid">
+                    {errors.voo}
+                  </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="passageiro">
                             <Form.Label>Passageiro</Form.Label>
@@ -67,7 +70,9 @@ export default function Page({ params }) {
                                 onChange={handleChange('passageiro')}
                                 isInvalid={!!errors.passageiro && touched.passageiro}
                             />
-                            <ErrorMessage name="passageiro" component="div" className="text-danger" />
+                            <Form.Control.Feedback type="invalid">
+                    {errors.passageiro}
+                  </Form.Control.Feedback>
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="assento">
                             <Form.Label>Assento</Form.Label>
@@ -78,18 +83,33 @@ export default function Page({ params }) {
                                 onChange={handleChange('assento')}
                                 isInvalid={!!errors.assento && touched.assento}
                             />
-                            <ErrorMessage name="assento" component="div" className="text-danger" />
+                             <Form.Control.Feedback type="invalid">
+                    {errors.assento}
+                  </Form.Control.Feedback>
+
+
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="preco">
                             <Form.Label>Preço</Form.Label>
-                            <Form.Control type="number"
+                            <Form.Control 
+                                type="text"
                                 placeholder="Digite o preço da passagem"
                                 name="preco"
                                 value={values.preco}
-                                onChange={handleChange('preco')}
-                                isInvalid={!!errors.preco && touched.preco}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+                  const formattedValue = (Number(value) / 100).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  });
+                  setFieldValue("preco", formattedValue);
+                }}
                             />
-                            <ErrorMessage name="preco" component="div" className="text-danger" />
+                           <Form.Control.Feedback type="invalid">
+                    {errors.preco}
+                  </Form.Control.Feedback>
+
+
                         </Form.Group>
                         <div className="text-center">
                             <Link href={"/passagem"} className="btn btn-primary"><FaAngleLeft />Voltar</Link>
